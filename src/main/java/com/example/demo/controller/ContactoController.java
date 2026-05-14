@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/contactos")
 @CrossOrigin(origins = "http://localhost:4200")
+@SuppressWarnings("null")
 public class ContactoController {
 
     @Autowired
