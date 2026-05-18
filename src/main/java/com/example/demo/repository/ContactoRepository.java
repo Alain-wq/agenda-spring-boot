@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface ContactoRepository extends JpaRepository<Contacto, Long> {
     List<Contacto> findAllByOrderByIdDesc();
+    List<Contacto> findByUsuarioIdOrderByIdDesc(Long usuarioId);
 }

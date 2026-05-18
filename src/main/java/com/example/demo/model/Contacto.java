@@ -14,6 +14,10 @@ public class Contacto {
     private String telefono;
     private String email;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
     public Contacto() {
     }
 
@@ -47,5 +51,13 @@ public class Contacto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
