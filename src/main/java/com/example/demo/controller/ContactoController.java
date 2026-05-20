@@ -30,6 +30,13 @@ public class ContactoController {
 
     @PostMapping
     public ResponseEntity<?> guardar(@RequestParam Long usuarioId, @RequestBody Contacto contacto) {
+        if (contacto.getNombre() == null || !contacto.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            return ResponseEntity.badRequest().body("Solo se permiten letras y espacios en el nombre.");
+        }
+        if (contacto.getTelefono() == null || !contacto.getTelefono().matches("^[0-9]{10}$")) {
+            return ResponseEntity.badRequest().body("El teléfono debe contener exactamente 10 dígitos numéricos.");
+        }
+
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioId);
         if (!usuarioOpt.isPresent()) {
             return ResponseEntity.badRequest().body("Usuario no encontrado");
@@ -39,7 +46,14 @@ public class ContactoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Contacto> actualizar(@PathVariable Long id, @RequestBody Contacto detalles) {
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Contacto detalles) {
+        if (detalles.getNombre() == null || !detalles.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            return ResponseEntity.badRequest().body("Solo se permiten letras y espacios en el nombre.");
+        }
+        if (detalles.getTelefono() == null || !detalles.getTelefono().matches("^[0-9]{10}$")) {
+            return ResponseEntity.badRequest().body("El teléfono debe contener exactamente 10 dígitos numéricos.");
+        }
+
         return repository.findById(id)
                 .map(contacto -> {
                     contacto.setNombre(detalles.getNombre());
